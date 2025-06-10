@@ -19,6 +19,13 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  /* 新增主色调变量，使用你的图片色板 */
+  --main-bg: #f2f6ff;
+  --main-dark: #29282f;
+  --main-light: #cad7ef;
+  --main-blue: #557fb0;
+  --main-deepblue: #243b88;
 }
 
 /* semantic color variables for this project */
