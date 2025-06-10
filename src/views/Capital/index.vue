@@ -64,7 +64,6 @@ import CapitalNav from './Capitalnav.vue'
 .main-content {
   display: flex;
   width: 100vw;
-  /* 移除max-width和margin */
   gap: 24px;
   box-sizing: border-box;
   padding: 24px 24px 0 24px;
@@ -175,83 +174,6 @@ import CapitalNav from './Capitalnav.vue'
   border-radius: 50%;
 }
 .comment-content {
-  flex: 1;
-}
-.comment-user {
-  font-weight: bold;
-  font-size: 14px;
-}
-.comment-text {
-  font-size: 13px;
-  color: #444;
-}
-.comment-date {
-  font-size: 12px;
-  color: #aaa;
-}
-</style>
- 1;
-}
-.comment-user {
-  font-weight: bold;
-  font-size: 14px;
-}
-.comment-text {
-  font-size: 13px;
-  color: #444;
-}
-.comment-date {
-  font-size: 12px;
-  color: #aaa;
-}
-</style>
- 1;
-}
-.comment-user {
-  font-weight: bold;
-  font-size: 14px;
-}
-.comment-text {
-  font-size: 13px;
-  color: #444;
-}
-.comment-date {
-  font-size: 12px;
-  color: #aaa;
-}
-</style>
- 12px;
-  color: var(--main-blue);
-=======
-}
-.comment-content {
-  flex: 1;
-}
-.comment-user {
-  font-weight: bold;
-  font-size: 14px;
-}
-.comment-text {
-  font-size: 13px;
-  color: #444;
-}
-.comment-date {
-  font-size: 12px;
-  color: #aaa;
->>>>>>> lxy
-
-  color: var(--main-deepblue);
-}
-
-.comment-text {
-  font-size: 13px;
-  color: var(--main-dark);
-}
-
-.comment-date {
-  font-size: 12px;
-  color: var(--main-blue);
- {
   flex: 1;
 }
 .comment-user {
