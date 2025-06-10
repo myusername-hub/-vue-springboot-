@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import CapitalNav from './views/Capital/Capitalnav.vue'
+import CapitalIndex from './views/Capital/index.vue'
 </script>
 
 <template>
-  <CapitalNav />
+  <CapitalIndex />
 </template>
 
 <style scoped></style>
