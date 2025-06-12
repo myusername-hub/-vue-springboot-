@@ -1,10 +1,6 @@
-<script lang="ts">
-export default {
-  name: 'CapitalNav',
-}
-</script>
 <script setup lang="ts">
 import { ref } from 'vue'
+import txImg from '@/assets/images/tx.jpg'
 const navItems = [
   { name: '首页', path: '/' },
   { name: '我的', path: '/my' },
@@ -34,32 +30,39 @@ const onSearch = () => {
     </div>
     <div class="nav-right">
       <form class="search-bar" @submit.prevent="onSearch">
-        <input v-model="searchText" type="text" placeholder="搜索…" />
-        <button type="submit">搜索</button>
+        <input v-model="searchText" type="text" placeholder="搜索你感兴趣的博客..." />
+        <button type="submit"><i class="iconfont icon-sousuo"></i></button>
       </form>
       <div class="avatar">
-        <img src="../../assets/images/R-C.jpg" alt="" />
+        <img :src="txImg" alt="" />
       </div>
     </div>
   </nav>
 </template>
 <style scoped>
 .capital-nav {
+  height: 55px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
+  background: #f7fafd; /* 浅色背景，与主页面区分 */
+  border-bottom: 1.5px solid var(--main-blue);
 }
 .nav-left {
+  margin-left: 5px;
   display: flex;
   align-items: center;
   flex: 1;
 }
 .nav-auth {
   margin-right: 20px;
-  color: #1976d2;
+  color: var(--main-blue);
   font-weight: bold;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 .items {
   display: flex;
@@ -68,37 +71,76 @@ const onSearch = () => {
   padding: 0;
   list-style: none;
 }
-.nav-auth a {
-  color: #1976d2;
+.nav-auth a,
+.items a {
+  font-size: 17px;
+  color: var(--main-blue);
   text-decoration: none;
-  margin: 0 4px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0 8px;
+  transition: color 0.2s;
+  line-height: 55px;
+  display: flex;
+  align-items: center;
+}
+.nav-auth a:hover,
+.items a:hover {
+  color: var(--main-deepblue);
+  background: none;
+  text-decoration: none;
 }
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
 }
 .search-bar {
   display: flex;
   align-items: center;
 }
 .search-bar input {
-  padding: 4px 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px 0 0 4px;
+  width: 200px;
+  height: 30px;
+  font-size: 14px;
+  padding: 4px 12px;
+  border: 1px solid #a3bcd5;
+  border-radius: 5px 0 0 5px;
   outline: none;
+  background: #fff;
+  color: var(--main-dark);
+}
+/* 设置placeholder字体更小 */
+.search-bar input::placeholder {
+  font-size: 12px;
+  color: var(--main-light);
+  opacity: 1;
 }
 .search-bar button {
-  padding: 4px 12px;
-  border: 1px solid #1976d2;
-  background: #1976d2;
+  font-size: 18px;
+  height: 30px;
+  padding: 0 10px;
+  background: var(--main-blue);
   color: #fff;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 5px 5px 0;
   cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-bar button:hover {
+  background: var(--main-deepblue);
+}
+.search-bar button i {
+  font-size: 20px;
 }
 .avatar img {
-  width: 32px;
-  height: 32px;
+  margin-left: 20px;
+  margin-right: 10px;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
   object-fit: cover;
 }
