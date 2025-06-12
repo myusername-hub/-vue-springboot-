@@ -1,0 +1,16 @@
+{
+  "id": "4947572",
+  "name": "vue-springboot",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "22899521",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e658",
+      "unicode_decimal": 58968
+    }
+  ]
+}
