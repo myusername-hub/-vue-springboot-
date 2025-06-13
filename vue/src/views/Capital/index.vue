@@ -55,14 +55,14 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
                 <img class="article-img" :src="item.img" alt="" />
               </div>
               <div class="article-info">
-                <h3><a href="#">{{ item.title }}</a></h3>
+                <h3><router-link :to="`/detail/${item.id}`">{{ item.title }}</router-link></h3>
                 <p class="article-desc">{{ item.desc }}</p>
                 <div class="article-date">{{ item.date }}</div>
               </div>
             </template>
             <template v-else>
               <div class="article-info">
-                <h3><a href="#">{{ item.title }}</a></h3>
+                <h3><router-link :to="`/detail/${item.id}`">{{ item.title }}</router-link></h3>
                 <p class="article-desc">{{ item.desc }}</p>
                 <div class="article-date">{{ item.date }}</div>
               </div>
@@ -119,7 +119,6 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 .main-content {
   display: flex;
   width: 100vw;
-  /* 移除max-width和margin */
   gap: 24px;
   box-sizing: border-box;
   padding: 24px 24px 0 24px;
@@ -201,7 +200,8 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
   transition: color 0.2s;
 }
 .article-info h3 a:hover {
-  color: var(--main-dark);
+  color: #315d90;
+  background: none !important;
   text-decoration: none;
 }
 .article-desc {

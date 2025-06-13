@@ -68,10 +68,8 @@
 body {
   min-height: 100vh;
   color: var(--color-text);
-  background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  background: #f2f6ff; /* 固定主色调背景，不要渐变和变化 */
+  /* 移除transition，防止页面加载时颜色变化 */
   line-height: 1.6;
   font-family:
     Inter,
@@ -94,3 +92,10 @@ body {
 li {
   list-style: none;
 }
+
+/* 全局去除图片hover时的背景色（如头像等） */
+img:hover, img:active, img:focus {
+  background: none !important;
+  box-shadow: none !important;
+}
+

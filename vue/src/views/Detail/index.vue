@@ -44,6 +44,10 @@ const onSearch = () => {
       </div>
     </div>
   </nav>
+  <div class="detail-page">
+    <h1>文章详情页</h1>
+    <p>文章ID: {{ articleId }}</p>
+  </div>
 </template>
 <style scoped>
 .capital-nav {
@@ -168,5 +172,8 @@ const onSearch = () => {
   transform: translate(-50%, -50%) scale(1.05);
   background: none !important;
   box-shadow: none !important;
+}
+.detail-page {
+  padding: 20px;
 }
 </style>
