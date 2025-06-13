@@ -2,6 +2,22 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import CapitalNav from '@/views/Capital/Capitalnav.vue'
+import txImg from '@/assets/images/tx.jpg'
+
+interface Reply {
+  user: string
+  avatar: string
+  text: string
+  date: string
+}
+interface Comment {
+  user: string
+  avatar: string
+  text: string
+  date: string
+  likes: number
+  replies: Reply[]
+}
 
 const route = useRoute()
 const articleId = ref(Number(route.params.id))
@@ -17,6 +33,43 @@ const articleDetail = ref({
   likes: 0,
   comments: 0
 })
+
+const myAvatar = txImg // 你的头像
+const myName = 'Cheems'
+const commentInput = ref('')
+const comments = ref<Comment[]>([
+  { user: 'Alice', avatar: txImg, text: '写得真棒！', date: '2024-06-10 10:01', likes: 0, replies: [] },
+  { user: 'Bob', avatar: txImg, text: '受教了，感谢分享。', date: '2024-06-10 10:05', likes: 0, replies: [] }
+])
+
+const replyInput = ref('')
+const replyIndex = ref(-1)
+
+const likeComment = (idx: number) => {
+  comments.value[idx].likes++
+}
+
+const showReplyInput = (idx: number) => {
+  replyIndex.value = replyIndex.value === idx ? -1 : idx
+  replyInput.value = ''
+}
+
+const submitReply = (idx: number) => {
+  if (!replyInput.value.trim()) return
+  const now = new Date()
+  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`
+  comments.value[idx].replies.push({ user: myName, avatar: myAvatar, text: replyInput.value, date })
+  replyInput.value = ''
+  replyIndex.value = -1
+}
+
+const submitComment = () => {
+  if (!commentInput.value.trim()) return
+  const now = new Date()
+  const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`
+  comments.value.unshift({ user: myName, avatar: myAvatar, text: commentInput.value, date })
+  commentInput.value = ''
+}
 
 // 根据标题生成相关内容的函数
 const generateContent = (title: string) => {
@@ -218,6 +271,51 @@ onMounted(() => {
         </div>
       </div>
       <div class="article-content" v-html="articleDetail.content"></div>
+      <!-- 基础评论区 -->
+      <div class="comments-section">
+        <div v-for="(c, i) in comments" :key="i" class="comment-item">
+          <img class="comment-avatar" :src="c.avatar" alt="" />
+          <div class="comment-main">
+            <div class="comment-user">{{ c.user }}</div>
+            <div class="comment-text">{{ c.text }}</div>
+            <div class="comment-date">{{ c.date }}</div>
+            <div class="comment-actions">
+              <span class="like-btn" @click="likeComment(i)">
+                <i class="iconfont icon-dianzan"></i> {{ c.likes }}
+              </span>
+              <span class="reply-btn" @click="showReplyInput(i)">
+                <i class="iconfont icon-review"></i> 回复
+              </span>
+            </div>
+            <!-- 回复输入框 -->
+            <div v-if="replyIndex === i" class="reply-input-bar">
+              <input 
+                v-model="replyInput" 
+                @keyup.enter="submitReply(i)" 
+                type="text" 
+                :placeholder="`回复 ${comments[i].user}...`" 
+              />
+              <button @click="submitReply(i)">发布</button>
+            </div>
+            <!-- 回复列表 -->
+            <div v-if="c.replies.length" class="reply-list">
+              <div v-for="(r, j) in c.replies" :key="j" class="reply-item">
+                <img class="reply-avatar" :src="r.avatar" alt="" />
+                <div class="reply-main">
+                  <div class="reply-user">{{ r.user }}</div>
+                  <div class="reply-text">{{ r.text }}</div>
+                  <div class="reply-date">{{ r.date }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="comment-input-bar">
+          <img class="my-avatar" :src="myAvatar" alt="" />
+          <input v-model="commentInput" @keyup.enter="submitComment" type="text" placeholder="说点什么..." />
+          <button @click="submitComment">发布</button>
+        </div>
+      </div>
     </div>
     <div v-else class="not-found">
       文章不存在或已被删除
@@ -303,4 +401,151 @@ onMounted(() => {
   color: var(--main-light);
   font-size: 16px;
 }
-</style> 
+
+.comments-section {
+  margin-top: 48px;
+  padding-bottom: 24px;
+  border-top: 1.5px solid #e5e6eb; /* 分界线 */
+  padding-top: 32px; 
+}
+.comment-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.comment-avatar, .my-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.5px solid var(--main-light);
+}
+.comment-main {
+  flex: 1;
+}
+.comment-user {
+  font-weight: bold;
+  font-size: 15px;
+  color: var(--main-deepblue);
+}
+.comment-text {
+  font-size: 14px;
+  color: var(--main-dark);
+  margin: 4px 0 2px 0;
+}
+.comment-date {
+  font-size: 12px;
+  color: var(--main-light);
+}
+.comment-input-bar {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  gap: 12px;
+}
+.comment-input-bar input {
+  flex: 1;
+  height: 36px;
+  border: 1px solid #a3bcd5;
+  border-radius: 5px;
+  padding: 0 12px;
+  font-size: 15px;
+  outline: none;
+}
+.comment-input-bar button {
+  background: var(--main-blue);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0 18px;
+  height: 36px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.comment-input-bar button:hover {
+  background: var(--main-deepblue);
+}
+.comment-actions {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--main-light);
+  display: flex;
+  gap: 18px;
+}
+.comment-actions .iconfont {
+  font-size: 18px;
+  margin-right: 4px;
+  vertical-align: middle;
+}
+.like-btn, .reply-btn {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s;
+}
+.like-btn:hover, .reply-btn:hover {
+  color: var(--main-blue);
+}
+.reply-input-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 0 0;
+}
+.reply-input-bar input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #a3bcd5;
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 14px;
+  outline: none;
+}
+.reply-input-bar button {
+  background: var(--main-blue);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 0 14px;
+  height: 32px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.reply-input-bar button:hover {
+  background: var(--main-deepblue);
+}
+.reply-list {
+  margin-top: 10px;
+  padding-left: 38px;
+}
+.reply-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.reply-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--main-light);
+}
+.reply-main {
+  flex: 1;
+}
+.reply-user {
+  font-weight: bold;
+  font-size: 13px;
+  color: var(--main-blue);
+}
+.reply-text {
+  font-size: 13px;
+  color: var(--main-dark);
+  margin: 2px 0 1px 0;
+}
+.reply-date {
+  font-size: 12px;
+  color: var(--main-light);
+}
+</style>
