@@ -51,9 +51,11 @@ const onSearch = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 24px;  /* 调整为24px，与main-content对齐 */
   background: #f7fafd;
   border-bottom: 1.5px solid #557fb0;
+  width: 95vw;  /* 设置为100vw确保占满整个视口宽度 */
+  box-sizing: border-box;
 }
 .nav-left {
   margin-left: 5px;

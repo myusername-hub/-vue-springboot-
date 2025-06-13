@@ -118,10 +118,10 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 }
 .main-content {
   display: flex;
-  width: 100vw;
+  width: 95vw;
   gap: 24px;
   box-sizing: border-box;
-  padding: 24px 24px 0 24px;
+  padding: 24px 0 0 0;
 }
 .content-left {
   flex: 2.5;

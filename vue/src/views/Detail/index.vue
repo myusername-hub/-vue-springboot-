@@ -1,179 +1,306 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import txImg from '@/assets/images/tx.jpg'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import CapitalNav from '@/views/Capital/Capitalnav.vue'
 
-const router = useRouter()
-const navItems = [
-  { name: '首页', path: '/' },
-  { name: '我的', path: '/my' },
-]
-const userName = ref<string | null>(null) // 未登录为null，登录后赋值用户名
-const searchText = ref('')
-const onSearch = () => {
-  // 这里可以处理搜索逻辑
-  alert(`搜索内容：${searchText.value}`)
+const route = useRoute()
+const articleId = ref(Number(route.params.id))
+
+// 文章详情数据
+const articleDetail = ref({
+  id: 0,
+  title: '',
+  content: '',
+  date: '',
+  author: 'Cheems',
+  views: 0,
+  likes: 0,
+  comments: 0
+})
+
+// 根据标题生成相关内容的函数
+const generateContent = (title: string) => {
+  const contentMap: { [key: string]: string } = {
+    'Vue3 + TS 实战入门': `# Vue3 + TypeScript 开发指南
+
+## 1. 环境搭建
+首先需要安装 Node.js 和 npm，然后使用 Vue CLI 创建项目：
+\`\`\`bash
+npm create vue@latest
+\`\`\`
+
+## 2. TypeScript 配置
+在 tsconfig.json 中配置 TypeScript：
+\`\`\`json
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": true
+  }
 }
+\`\`\`
+
+## 3. 组件开发
+使用组合式 API 和 TypeScript：
+\`\`\`typescript
+import { ref, defineComponent } from 'vue'
+
+export default defineComponent({
+  setup() {
+    const count = ref(0)
+    return { count }
+  }
+})
+\`\`\`
+
+## 4. 类型定义
+为 props 和事件定义类型：
+\`\`\`typescript
+interface Props {
+  title: string
+  count?: number
+}
+
+defineProps<Props>()
+\`\`\`
+
+## 5. 最佳实践
+- 使用 TypeScript 的类型推导
+- 合理使用接口和类型
+- 保持代码简洁清晰`,
+
+    'SpringBoot RESTful API设计': `# SpringBoot RESTful API 设计指南
+
+## 1. RESTful 原则
+- 使用 HTTP 方法表示操作
+- 使用 URL 表示资源
+- 使用 HTTP 状态码表示结果
+
+## 2. 控制器设计
+\`\`\`java
+@RestController
+@RequestMapping("/api/v1/articles")
+public class ArticleController {
+    @GetMapping("/{id}")
+    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
+        // 实现获取文章逻辑
+    }
+    
+    @PostMapping
+    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+        // 实现创建文章逻辑
+    }
+}
+\`\`\`
+
+## 3. 统一响应格式
+\`\`\`java
+public class ApiResponse<T> {
+    private int code;
+    private String message;
+    private T data;
+}
+\`\`\`
+
+## 4. 异常处理
+\`\`\`java
+@ControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse> handleException(Exception e) {
+        // 统一异常处理
+    }
+}
+\`\`\`
+
+## 5. 接口文档
+使用 Swagger 或 SpringDoc 生成 API 文档`,
+
+    '前端性能优化技巧': `# 前端性能优化实战指南
+
+## 1. 资源加载优化
+- 使用 CDN 加速
+- 图片懒加载
+- 资源预加载
+
+## 2. 代码优化
+\`\`\`javascript
+// 使用防抖
+function debounce(fn, delay) {
+  let timer = null
+  return function() {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.apply(this, arguments)
+    }, delay)
+  }
+}
+
+// 使用节流
+function throttle(fn, delay) {
+  let last = 0
+  return function() {
+    const now = Date.now()
+    if (now - last > delay) {
+      fn.apply(this, arguments)
+      last = now
+    }
+  }
+}
+\`\`\`
+
+## 3. 缓存策略
+- 合理使用浏览器缓存
+- 使用 Service Worker
+- 实现离线功能
+
+## 4. 渲染优化
+- 使用虚拟列表
+- 避免重排重绘
+- 使用 CSS 动画代替 JS 动画
+
+## 5. 监控与分析
+- 使用性能监控工具
+- 分析用户行为
+- 持续优化改进`
+  }
+
+  return contentMap[title] || '文章内容加载中...'
+}
+
+// 模拟获取文章详情
+onMounted(() => {
+  // 这里模拟从后端获取数据
+  const articles = [
+    {
+      id: 1,
+      title: 'Vue3 + TS 实战入门',
+      date: '2024-06-01'
+    },
+    {
+      id: 2,
+      title: 'SpringBoot RESTful API设计',
+      date: '2024-06-02'
+    },
+    {
+      id: 3,
+      title: '前端性能优化技巧',
+      date: '2024-06-03'
+    }
+  ]
+
+  const article = articles.find(a => a.id === articleId.value)
+  if (article) {
+    articleDetail.value = {
+      ...article,
+      content: generateContent(article.title),
+      views: Math.floor(Math.random() * 1000),
+      likes: Math.floor(Math.random() * 100),
+      comments: Math.floor(Math.random() * 50)
+    }
+  }
+})
 </script>
+
 <template>
-  <nav class="capital-nav">
-    <div class="nav-left">
-      <div class="nav-auth">
-        <template v-if="!userName">
-          <router-link class="login" to="/login">登录</router-link>
-          <router-link class="register" to="/register">注册</router-link>
-        </template>
-        <template v-else> 欢迎您，{{ userName }} </template>
-      </div>
-      <ul class="items">
-        <li v-for="item in navItems" :key="item.path">
-          <router-link :to="item.path">{{ item.name }}</router-link>
-        </li>
-      </ul>
-    </div>
-    <div class="nav-right">
-      <form class="search-bar" @submit.prevent="onSearch">
-        <input v-model="searchText" type="text" placeholder="搜索你感兴趣的博客..." />
-        <button type="submit"><i class="iconfont icon-sousuo"></i></button>
-      </form>
-      <div class="avatar">
-        <router-link class="avatar" to="/my">
-          <img :src="txImg" alt="" />
-        </router-link>
-        
-      </div>
-    </div>
-  </nav>
   <div class="detail-page">
-    <h1>文章详情页</h1>
-    <p>文章ID: {{ articleId }}</p>
+    <CapitalNav />
+    <div class="article-container" v-if="articleDetail.id">
+      <div class="article-header">
+        <h1>{{ articleDetail.title }}</h1>
+        <div class="article-meta">
+          <span>作者：{{ articleDetail.author }}</span>
+          <span>发布时间：{{ articleDetail.date }}</span>
+          <span>阅读：{{ articleDetail.views }}</span>
+          <span>点赞：{{ articleDetail.likes }}</span>
+          <span>评论：{{ articleDetail.comments }}</span>
+        </div>
+      </div>
+      <div class="article-content" v-html="articleDetail.content"></div>
+    </div>
+    <div v-else class="not-found">
+      文章不存在或已被删除
+    </div>
   </div>
 </template>
+
 <style scoped>
-.capital-nav {
-  height: 55px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  background: #f7fafd;
-  border-bottom: 1.5px solid #557fb0;
+.detail-page {
+  background: var(--main-bg);
+  min-height: 100vh;
+  width: 100%;
 }
-.nav-left {
-  margin-left: 5px;
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-.nav-auth {
-  margin-right: 20px;
-  color: #557fb0;
-  font-weight: bold;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-.items {
-  display: flex;
-  gap: 24px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.nav-auth a,
-.items a {
-  font-size: 17px;
-  color: #557fb0;
-  text-decoration: none;
-  font-weight: 500;
-  margin: 0;
-  padding: 0 8px;
-  line-height: 55px;
-  display: flex;
-  align-items: center;
-  background: none !important;
-}
-.nav-auth a:hover,
-.items a:hover {
-  color: #315d90;
-  background: none !important;
-  text-decoration: none;
-}
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-.search-bar {
-  display: flex;
-  align-items: center;
-}
-.search-bar input {
-  width: 200px;
-  height: 30px;
-  font-size: 14px;
-  padding: 4px 12px;
-  border: 1px solid #a3bcd5;
-  border-radius: 5px 0 0 5px;
-  outline: none;
+
+.article-container {
+  width: 95vw;
+  margin: 24px auto;
+  padding: 24px;
   background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #0001;
+  box-sizing: border-box;
+}
+
+.article-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.article-header h1 {
+  color: var(--main-deepblue);
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.article-meta {
+  display: flex;
+  gap: 16px;
+  color: var(--main-light);
+  font-size: 14px;
+}
+
+.article-content {
+  line-height: 1.8;
   color: var(--main-dark);
 }
-/* 设置placeholder字体更小 */
-.search-bar input::placeholder {
-  font-size: 12px;
-  color: var(--main-light);
-  opacity: 1;
+
+.article-content :deep(h1) {
+  font-size: 24px;
+  color: var(--main-deepblue);
+  margin: 24px 0 16px;
 }
-.search-bar button {
-  font-size: 18px;
-  height: 30px;
-  padding: 0 10px;
-  background: var(--main-blue);
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.search-bar button:hover {
-  background: #315d90; 
-}
-.search-bar button i {
+
+.article-content :deep(h2) {
   font-size: 20px;
+  color: var(--main-blue);
+  margin: 20px 0 14px;
 }
-.avatar {
-  position: relative;
-  width: 42px;
-  height: 42px;
-  margin-left: 20px;
-  margin-right: 10px;
-  background: none !important;
+
+.article-content :deep(p) {
+  margin: 12px 0;
 }
-.avatar img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  top: 20px;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  transition: transform 0.2s ease;
-  border: 1.5px solid #557fb0;
-  background: none !important;
+
+.article-content :deep(pre) {
+  background: #f5f7fa;
+  padding: 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 16px 0;
 }
-.avatar img:hover {
-  cursor: pointer;
-  transform: translate(-50%, -50%) scale(1.05);
-  background: none !important;
-  box-shadow: none !important;
+
+.article-content :deep(code) {
+  font-family: monospace;
+  background: #f5f7fa;
+  padding: 2px 4px;
+  border-radius: 4px;
 }
-.detail-page {
-  padding: 20px;
+
+.not-found {
+  text-align: center;
+  padding: 48px;
+  color: var(--main-light);
+  font-size: 16px;
 }
-</style>
+</style> 
