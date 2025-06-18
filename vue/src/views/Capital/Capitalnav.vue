@@ -54,7 +54,7 @@ const onSearch = () => {
   padding: 0 24px;  /* 调整为24px，与main-content对齐 */
   background: #f7fafd;
   border-bottom: 1.5px solid #557fb0;
-  width: 95vw;  /* 设置为100vw确保占满整个视口宽度 */
+  width: 100vw;  /* 设置为100vw确保占满整个视口宽度 */
   box-sizing: border-box;
 }
 .nav-left {
@@ -149,14 +149,14 @@ const onSearch = () => {
   height: 42px;
   margin-left: 20px;
   margin-right: 10px;
+  margin-top: 20px; /* 增加上边距，让头像距离顶部更远 */
   background: none !important;
 }
 .avatar img {
   position: absolute;
   top: 50%;
   left: 50%;
-  top: 20px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); /* 使用translate实现完全居中 */
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -165,9 +165,10 @@ const onSearch = () => {
   border: 1.5px solid #557fb0;
   background: none !important;
 }
+
 .avatar img:hover {
   cursor: pointer;
-  transform: translate(-50%, -50%) scale(1.05);
+  transform: translate(-50%, -50%) scale(1.05); /* 保持居中的同时实现缩放 */
   background: none !important;
   box-shadow: none !important;
 }

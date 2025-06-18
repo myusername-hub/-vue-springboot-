@@ -1,24 +1,73 @@
 <template>
-  <div class="register-bg">
+  <div class="register-page">
     <div class="register-container">
-      <h2>注册账号</h2>
-      <el-form :model="registerForm" class="register-form">
-        <el-form-item>
-          <el-input v-model="registerForm.username" prefix-icon="el-icon-user" placeholder="用户名" />
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="registerForm.password" prefix-icon="el-icon-lock" placeholder="密码" show-password />
-        </el-form-item>
-        <el-form-item>
-          <el-input v-model="registerForm.confirm" prefix-icon="el-icon-lock" placeholder="确认密码" show-password />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" class="register-btn" @click="handleRegister">注 册</el-button>
-        </el-form-item>
-        <div class="register-links">
-          <el-link type="info" @click="goLogin">返回登录</el-link>
+      <div class="register-header">
+        <h1>注册</h1>
+        <p>欢迎加入Max工作室</p>
+      </div>
+      
+      <form class="register-form" @submit.prevent="handleRegister">
+        <div class="form-row">
+          <label>用户名</label>
+          <div class="input-wrapper">
+            <input 
+              v-model="registerForm.username" 
+              type="text"
+              placeholder="请输入用户名"
+            />
+          </div>
         </div>
-      </el-form>
+        
+        <div class="form-row">
+          <label>邮箱</label>
+          <div class="input-wrapper">
+            <input 
+              v-model="registerForm.email" 
+              type="email"
+              placeholder="请输入邮箱" 
+            />
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <label>密码</label>
+          <div class="input-wrapper">
+            <input 
+              v-model="registerForm.password" 
+              type="password"
+              placeholder="请输入密码" 
+            />
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <label>确认密码</label>
+          <div class="input-wrapper">
+            <input 
+              v-model="registerForm.confirmPassword" 
+              type="password"
+              placeholder="请再次输入密码" 
+            />
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <label class="checkbox-wrapper">
+            <input type="checkbox" v-model="registerForm.agree">
+            <span>我已阅读并同意 <a href="javascript:;" @click="showAgreement">服务协议</a></span>
+          </label>
+        </div>
+        
+        <div class="form-row">
+          <button type="submit" class="submit-btn">
+            注册
+          </button>
+        </div>
+        
+        <div class="form-row links">
+          <a href="javascript:;" @click="goLogin">已有账号？立即登录</a>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -28,50 +77,175 @@ import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+
 const registerForm = reactive({
   username: '',
+  email: '',
   password: '',
-  confirm: ''
+  confirmPassword: '',
+  agree: false
 })
 
 function handleRegister() {
-  // 注册逻辑
-  if (registerForm.password !== registerForm.confirm) {
+  if (!registerForm.username || !registerForm.email || !registerForm.password || !registerForm.confirmPassword) {
+    alert('请填写完整注册信息')
+    return
+  }
+  if (!registerForm.agree) {
+    alert('请阅读并同意服务协议')
+    return
+  }
+  if (registerForm.password !== registerForm.confirmPassword) {
     alert('两次输入的密码不一致')
     return
   }
   alert('注册功能待实现')
 }
+
 function goLogin() {
   router.push('/login')
+}
+
+function showAgreement() {
+  alert('服务协议待完善')
 }
 </script>
 
 <style scoped>
-.register-bg {
+.register-page {
   min-height: 100vh;
-  background: linear-gradient(120deg, #232526 0%, #414345 100%);
+  background: #8bb8f0;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 }
+
 .register-container {
-  background: rgba(0,0,0,0.7);
-  padding: 40px 32px 24px 32px;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
-  width: 350px;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.register-header {
   text-align: center;
+  margin-bottom: 30px;
 }
+
+.register-header h1 {
+  font-size: 24px;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.register-header p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
 .register-form {
-  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.register-btn {
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-row label {
+  font-size: 14px;
+  color: #333;
+  font-weight: 500;
+}
+
+.input-wrapper {
+  position: relative;
   width: 100%;
 }
-.register-links {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 8px;
+
+.input-wrapper input {
+  width: 100%;
+  height: 40px;
+  padding: 0 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background: white;
+  transition: all 0.3s;
 }
-</style> 
+
+.input-wrapper input:hover,
+.input-wrapper input:focus {
+  border-color: #8bb8f0;
+  box-shadow: 0 0 0 2px rgba(139, 184, 240, 0.2);
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.checkbox-wrapper span {
+  font-size: 14px;
+  color: #333;
+}
+
+.checkbox-wrapper a {
+  color: #8bb8f0;
+}
+
+.checkbox-wrapper a:hover {
+  color: #6ba3e8;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 40px;
+  background: #8bb8f0;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: #6ba3e8;
+}
+
+.links {
+  text-align: center;
+}
+
+.links a {
+  color: #8bb8f0;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.links a:hover {
+  color: #6ba3e8;
+}
+
+@media (max-width: 480px) {
+  .register-container {
+    padding: 30px 20px;
+  }
+}
+</style>
