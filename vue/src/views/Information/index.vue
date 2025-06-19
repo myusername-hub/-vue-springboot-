@@ -99,14 +99,14 @@ const handleSave = () => {
 <style scoped>
 .edit-page {
   min-height: 100vh;
-  background: var(--main-bg);
+  background: #101c28;
 }
 
 .edit-container {
   max-width: 900px;
   margin: 40px auto;
   padding: 30px;
-  background: white;
+  background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
@@ -172,7 +172,7 @@ const handleSave = () => {
 .info-item label {
   display: block;
   margin-bottom: 8px;
-  color: var(--main-dark);
+  color: var(--main-blue);
   font-weight: 500;
 }
 
@@ -183,6 +183,7 @@ const handleSave = () => {
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  color: #666;
 }
 
 .info-item textarea {

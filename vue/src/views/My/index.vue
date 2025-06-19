@@ -1,35 +1,10 @@
-<script lang="ts">
-export default {
-  name: 'MyPage',
-}
-</script>
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import CapitalNav from '@/views/Capital/Capitalnav.vue'
 import txImg from '@/assets/images/tx.jpg'
 import bgImg from '@/assets/images/img4.jpg'
-
-// 用户信息
-const userInfo = {
-  name: 'Cheems',
-  description: '这个人很懒，什么都没有留下...',
-  articleCount: 3,
-  followCount: 0,
-  fansCount: 0
-}
-
-// 用户文章列表
-const articles = ref([
-  {
-    id: 1,
-    title: 'Vue3 + TS 实战入门',
-    date: '2024-06-01',
-    views: 128,
-    likes: 32
-  },
-  // ...其他文章
-])
+import { userInfo, articles } from '@/data/userData'
 
 const bgHeight = ref(200)
 const maxHeight = 800
@@ -75,7 +50,7 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
 })
 
-const handleEditProfile = () => {
+const goToInformation = () => {
   router.push('/information')
 }
 </script>
@@ -121,7 +96,7 @@ const handleEditProfile = () => {
             <div class="label">粉丝</div>
           </div>
         </div>
-        <button class="edit-btn" @click="handleEditProfile">编辑个人信息</button>
+        <button class="edit-btn" @click="goToInformation">编辑个人信息</button>
       </div>
       
       <div class="description">{{ userInfo.description }}</div>
@@ -151,7 +126,7 @@ const handleEditProfile = () => {
 <style scoped>
 .my-page {
   min-height: 100vh;
-  background: #f5f7fa;
+  background: #17304b;
 }
 
 .profile-header {
@@ -257,7 +232,7 @@ const handleEditProfile = () => {
 .stat-item .number {
   font-size: 20px;
   font-weight: 600;
-  color: var(--main-deepblue);
+  color: rgb(207, 214, 216);
 }
 
 .stat-item .label {
@@ -275,7 +250,7 @@ const handleEditProfile = () => {
 }
 
 .edit-btn:hover {
-  background: var(--main-deepblue);
+  background: #1e3b5c;
 }
 
 .description {
@@ -284,7 +259,7 @@ const handleEditProfile = () => {
 }
 
 .articles-section {
-  background: white;
+  background: rgb(235, 238, 243);
   border-radius: 8px;
   padding: 20px;
 }
@@ -304,7 +279,7 @@ const handleEditProfile = () => {
 
 .article-item {
   padding: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #333;
 }
 
 .article-title {

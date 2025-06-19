@@ -83,7 +83,7 @@ function goForgot() {
 <style scoped>
 .login-page {
   min-height: 100vh;
-  background: #8bb8f0;
+  background: #17304b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -91,7 +91,7 @@ function goForgot() {
 }
 
 .login-container {
-  background: white;
+  background: rgb(243, 246, 250);
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -178,7 +178,7 @@ function goForgot() {
 .submit-btn {
   width: 100%;
   height: 40px;
-  background: #8bb8f0;
+  background: #5f9ce7;
   border: none;
   border-radius: 4px;
   color: white;
@@ -186,17 +186,17 @@ function goForgot() {
 }
 
 .submit-btn:hover {
-  background: #6ba3e8;
+  background: #5093e6;
 }
 
 .links a {
-  color: #8bb8f0;
+  color: #5f9ce7;
   text-decoration: none;
   font-size: 14px;
 }
 
 .links a:hover {
-  color: #6ba3e8;
+  color: #5093e6;
 }
 
 /* 响应式 */

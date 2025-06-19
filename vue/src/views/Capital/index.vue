@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import CapitalNav from './Capitalnav.vue'
+import { userInfo, articles, categoryCount, tagCount } from '@/data/userData'
 import txImg from '@/assets/images/tx.jpg'
 import Img1 from '@/assets/images/img1.jpg'
 import Img2 from '@/assets/images/img2.jpg'
 import Img3 from '@/assets/images/img3.jpg'
 import Img4 from '@/assets/images/img4.jpg'
 import Img5 from '@/assets/images/img5.jpg'
-
-// 分类和标签数量
-const categoryCount = ref(0)
-const tagCount = ref(0)
 
 // 文章数据示例
 const articles = ref([
@@ -77,8 +74,8 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
         <!-- 个人信息卡片 -->
         <div class="profile-card">
           <img class="profile-avatar" :src="txImg" alt="" />
-          <div class="profile-name">Cheems</div>
-          <div class="profile-desc">网站介绍</div>
+          <div class="profile-name">{{ userInfo.name }}</div>
+          <div class="profile-desc">{{ userInfo.description }}</div>
           <div class="profile-stats">
             <span>{{ articles.length }} 文章</span>
             <span>{{ categoryCount }} 分类</span>
@@ -113,7 +110,7 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 </template>
 <style scoped>
 .capital-page {
-  background: var(--main-bg);
+  background: #274769;
   min-height: 100vh;
 }
 .main-content {
@@ -132,7 +129,7 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 .article-card {
   width: 100%;
   height: 150px;
-  background: #fff;
+  background: #f4f7fa;
   border-radius: 8px;
   box-shadow: 0 2px 8px #0001;
   margin: 8px;
@@ -222,7 +219,7 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 .profile-card,
 .notice-card,
 .comments-card {
-  background: #fff;
+  background: #f4f7fa;
   border-radius: 8px;
   box-shadow: 0 2px 8px #0001;
   padding: 16px;

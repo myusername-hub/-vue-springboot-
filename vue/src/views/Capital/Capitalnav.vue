@@ -52,7 +52,7 @@ const onSearch = () => {
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;  /* 调整为24px，与main-content对齐 */
-  background: #f7fafd;
+  background: #101c28;
   border-bottom: 1.5px solid #557fb0;
   width: 100vw;  /* 设置为100vw确保占满整个视口宽度 */
   box-sizing: border-box;
