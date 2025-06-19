@@ -128,7 +128,7 @@ const onSearch = () => {
   font-size: 18px;
   height: 30px;
   padding: 0 10px;
-  background: var(--main-blue);
+  background: #3a79bc;
   color: #fff;
   border-radius: 0 5px 5px 0;
   cursor: pointer;

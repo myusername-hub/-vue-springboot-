@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import CapitalNav from './Capitalnav.vue'
 import { userInfo, articles, categoryCount, tagCount } from '@/data/userData'
 import txImg from '@/assets/images/tx.jpg'
+import bgImg from '@/assets/images/bg.jpg'
 import Img1 from '@/assets/images/img1.jpg'
 import Img2 from '@/assets/images/img2.jpg'
 import Img3 from '@/assets/images/img3.jpg'
@@ -110,7 +111,9 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 </template>
 <style scoped>
 .capital-page {
-  background: #274769;
+  background: url(@/assets/images/bg.jpg) no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
   min-height: 100vh;
 }
 .main-content {
