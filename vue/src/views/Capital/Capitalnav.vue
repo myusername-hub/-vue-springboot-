@@ -56,6 +56,8 @@ const onSearch = () => {
   border-bottom: 1.5px solid #557fb0;
   width: 100vw;  /* 设置为100vw确保占满整个视口宽度 */
   box-sizing: border-box;
+  position: relative;
+  z-index: 2;
 }
 .nav-left {
   margin-left: 5px;

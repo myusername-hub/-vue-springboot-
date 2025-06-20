@@ -111,12 +111,28 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 </template>
 <style scoped>
 .capital-page {
+  position: relative;
+  min-height: 100vh;
+  background: #274769; /* 页面底色，可根据需要调整 */
+  overflow: hidden;
+}
+.capital-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: url(@/assets/images/bg.jpg) no-repeat center center;
   background-size: cover;
   background-attachment: fixed;
-  min-height: 100vh;
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
 }
 .main-content {
+  position: relative;
+  z-index: 1;
   display: flex;
   width: 95vw;
   gap: 24px;
