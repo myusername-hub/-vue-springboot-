@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import txImg from '@/assets/images/tx.jpg'
 
@@ -10,6 +10,29 @@ const navItems = [
 ]
 const userName = ref<string | null>(null) // 未登录为null，登录后赋值用户名
 const searchText = ref('')
+
+onMounted(() => {
+  const loggedInUserJson = localStorage.getItem('loggedInUser')
+  if (loggedInUserJson) {
+    try {
+      const user = JSON.parse(loggedInUserJson)
+      if (user && user.username) {
+        userName.value = user.username
+      }
+    } catch (e) {
+      console.error('解析用户信息失败:', e)
+      // 解析失败时，清除可能已损坏的数据
+      localStorage.removeItem('loggedInUser')
+    }
+  }
+})
+
+const handleLogout = () => {
+  localStorage.removeItem('loggedInUser')
+  userName.value = null
+  router.push('/') // 退出后跳转到首页
+}
+
 const onSearch = () => {
   // 这里可以处理搜索逻辑
   alert(`搜索内容：${searchText.value}`)
@@ -23,7 +46,10 @@ const onSearch = () => {
           <router-link class="login" to="/login">登录</router-link>
           <router-link class="register" to="/register">注册</router-link>
         </template>
-        <template v-else> 欢迎您，{{ userName }} </template>
+        <template v-else>
+          <span>欢迎您，{{ userName }}</span>
+          <a href="javascript:;" @click="handleLogout">退出登录</a>
+        </template>
       </div>
       <ul class="items">
         <li v-for="item in navItems" :key="item.path">

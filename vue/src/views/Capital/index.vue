@@ -134,10 +134,9 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
   position: relative;
   z-index: 1;
   display: flex;
-  width: 95vw;
-  gap: 24px;
+  gap: 30px;
   box-sizing: border-box;
-  padding: 24px 0 0 0;
+  padding: 24px 20px 0;
 }
 .content-left {
   flex: 2.5;
@@ -147,23 +146,27 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 }
 .article-card {
   width: 100%;
-  height: 150px;
+  height: 0;
+  padding-bottom: 20%; 
   background: #f4f7fa;
   border-radius: 8px;
   box-shadow: 0 2px 8px #0001;
   margin: 8px;
-  display: flex;
-  flex-direction: column;
+  position: relative;
 }
 .article-header {
   display: flex;
   gap: 0;
   align-items: stretch;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .article-img-wrapper {
   width: 200px;
-  height: 150px;
+  height: 100%;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -194,7 +197,7 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 }
 .article-img-wrapper.left .article-img {
   width: 100%;
-  height: 150px;
+  height: 100%;
   object-fit: cover;
   border-radius: 6px 0 0 6px;
   clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
