@@ -1,5 +1,5 @@
 <template>
-  <div class="register-page">
+  <div class="register-page" :style="{ '--bg-image': `url(${bgImg})` }">
     <div class="register-container">
       <div class="register-header">
         <h1>注册</h1>
@@ -74,6 +74,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import bgImg from '@/assets/images/dlzc.jpg'
 
 const router = useRouter()
 
@@ -137,15 +138,32 @@ function showAgreement() {
 <style scoped>
 .register-page {
   min-height: 100vh;
-  background: #17304b;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #274769;
+}
+
+.register-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  z-index: -1;
 }
 
 .register-container {
-  background: rgb(243, 246, 250);
+  background: rgba(243, 246, 250, 0.9); /* 增加一点背景色透明度以适应背景图 */
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

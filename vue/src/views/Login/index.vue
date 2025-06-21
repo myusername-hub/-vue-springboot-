@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page" :style="{ '--bg-image': `url(${bgImg})` }">
     <div class="login-container">
       <div class="login-header">
         <h1>登录</h1>
@@ -53,6 +53,7 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import bgImg from '@/assets/images/dlzc.jpg'
 
 const router = useRouter()
 
@@ -118,15 +119,31 @@ function goForgot() {
 <style scoped>
 .login-page {
   min-height: 100vh;
-  background: #17304b;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+  z-index: -1;
 }
 
 .login-container {
-  background: rgb(243, 246, 250);
+  background: rgba(243, 246, 250, 0.9);
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

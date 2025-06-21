@@ -113,7 +113,7 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
 .capital-page {
   position: relative;
   min-height: 100vh;
-  background: #274769; /* 页面底色，可根据需要调整 */
+  background: #274769;
   overflow: hidden;
 }
 .capital-page::before {
@@ -126,7 +126,7 @@ const comments = ref<{ user: string; text: string; date: string }[]>([])
   background: url(@/assets/images/bg.jpg) no-repeat center center;
   background-size: cover;
   background-attachment: fixed;
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: 0;
   pointer-events: none;
 }

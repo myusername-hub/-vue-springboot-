@@ -310,12 +310,12 @@ onMounted(() => {
             </div>
           </div>
         </div>
-        <div class="comment-input-bar">
-          <img class="my-avatar" :src="myAvatar" alt="" />
-          <input v-model="commentInput" @keyup.enter="submitComment" type="text" placeholder="说点什么..." />
-          <button @click="submitComment">发布</button>
-        </div>
       </div>
+    </div>
+    <div class="comment-input-bar" v-if="articleDetail.id">
+        <img class="my-avatar" :src="myAvatar" alt="" />
+        <input v-model="commentInput" @keyup.enter="submitComment" type="text" placeholder="说点什么..." />
+        <button @click="submitComment">发布</button>
     </div>
     <div v-else class="not-found">
       文章不存在或已被删除
@@ -325,9 +325,11 @@ onMounted(() => {
 
 <style scoped>
 .detail-page {
-  background: var(--main-bg);
+  background:rgb(23, 46, 71);
   min-height: 100vh;
   width: 100%;
+  /* 为固定的输入框腾出空间 */
+  padding-bottom: 80px; 
 }
 
 .article-container {
@@ -338,6 +340,10 @@ onMounted(() => {
   border-radius: 8px;
   box-shadow: 0 2px 8px #0001;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0; /* 防止flex子项溢出 */
 }
 
 .article-header {
@@ -406,7 +412,15 @@ onMounted(() => {
   margin-top: 48px;
   padding-bottom: 24px;
   border-top: 1.5px solid #e5e6eb; /* 分界线 */
-  padding-top: 32px; 
+  padding-top: 32px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0; /* 防止flex子项溢出 */
+}
+.comment-list {
+  flex-grow: 1;
+  overflow-y: auto;
 }
 .comment-item {
   display: flex;
@@ -438,9 +452,21 @@ onMounted(() => {
   color: var(--main-light);
 }
 .comment-input-bar {
+  /* 固定在视口底部 */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  /* 外观 */
+  background: #fff;
+  border-top: 1.5px solid #e5e6eb;
+  padding: 16px;
+
+  /* 内部布局 */
   display: flex;
   align-items: center;
-  margin-top: 16px;
   gap: 12px;
 }
 .comment-input-bar input {
