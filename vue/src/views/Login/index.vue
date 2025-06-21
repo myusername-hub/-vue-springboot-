@@ -3,7 +3,6 @@
     <div class="login-container">
       <div class="login-header">
         <h1>登录</h1>
-        <p>欢迎使用Max工作室</p>
       </div>
       
       <form class="login-form" @submit.prevent="handleLogin">
@@ -68,7 +67,43 @@ function handleLogin() {
     alert('请输入用户名和密码')
     return
   }
-  alert('登录功能待实现')
+
+  // 从localStorage获取用户列表
+  let users = []
+  const usersJson = localStorage.getItem('users')
+  if (usersJson) {
+    try {
+      users = JSON.parse(usersJson)
+    } catch (e) {
+      console.error("Error parsing users from localStorage", e)
+    }
+  }
+  
+  // 查找用户
+  const foundUser = users.find((user: any) => user.username === loginForm.username)
+  
+  if (!foundUser) {
+    alert('用户不存在')
+    return
+  }
+  
+  // 验证密码
+  if (foundUser.password !== loginForm.password) {
+    alert('密码错误')
+    return
+  }
+
+  // 记录登录状态
+  localStorage.setItem('loggedInUser', JSON.stringify(foundUser))
+  // 如果勾选了"记住密码"，可以额外处理
+  if (loginForm.remember) {
+    localStorage.setItem('rememberedUser', loginForm.username)
+  } else {
+    localStorage.removeItem('rememberedUser')
+  }
+  
+  // 跳转到首页
+  router.push('/')
 }
 
 function goRegister() {

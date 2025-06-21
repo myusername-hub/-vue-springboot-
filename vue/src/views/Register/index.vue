@@ -3,7 +3,6 @@
     <div class="register-container">
       <div class="register-header">
         <h1>注册</h1>
-        <p>欢迎加入Max工作室</p>
       </div>
       
       <form class="register-form" @submit.prevent="handleRegister">
@@ -87,6 +86,7 @@ const registerForm = reactive({
 })
 
 function handleRegister() {
+  // 表单基础校验
   if (!registerForm.username || !registerForm.email || !registerForm.password || !registerForm.confirmPassword) {
     alert('请填写完整注册信息')
     return
@@ -99,7 +99,30 @@ function handleRegister() {
     alert('两次输入的密码不一致')
     return
   }
-  alert('注册功能待实现')
+  
+  // 从localStorage获取用户列表，如果没有则初始化为空数组
+  const users = JSON.parse(localStorage.getItem('users') || '[]')
+  
+  // 检查用户名是否已存在
+  const userExists = users.some((user: any) => user.username === registerForm.username)
+  if (userExists) {
+    alert('用户名已存在')
+    return
+  }
+  
+  // 创建新用户
+  const newUser = {
+    username: registerForm.username,
+    email: registerForm.email,
+    password: registerForm.password // 注意：实际项目中密码需要加密存储
+  }
+  
+  // 添加新用户并存回localStorage
+  users.push(newUser)
+  localStorage.setItem('users', JSON.stringify(users))
+  
+  // 注册成功，直接跳转
+  router.push('/login')
 }
 
 function goLogin() {
